@@ -4,14 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>How Many Songs? — Artist Song Count Database</title>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" crossorigin="anonymous" referrerpolicy="no-referrer">
 
 <!-- ── Primary SEO ──────────────────────────────────────────────── -->
 <meta name="description" content="Search any artist to see exactly how many songs they have made. 315 artists, 9,686 documented songs across every genre and era. Try Song Math to compare artists by their song counts.">
 <meta name="keywords" content="how many songs, artist song count, music database, discography, Drake songs, Taylor Swift songs, Beyonce songs, Kendrick Lamar songs, Eminem songs, Chris Brown songs, song count">
 <meta name="author" content="Artist Song Count Database">
 <meta name="robots" content="index, follow">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none';">
+<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=()">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; connect-src 'self' https://pagead2.googlesyndication.com; frame-ancestors 'none';">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="canonical" href="https://www.howmanysongs.com/">
 
 <!-- ── Open Graph (Facebook, WhatsApp, iMessage previews) ──────── -->
@@ -118,8 +121,10 @@ body.light-mode .badge { border-width: 1px; }
 .footer-gear-wrap {
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1.35rem;
   flex-shrink: 0;
 }
 .footer-gear-btn {
@@ -425,13 +430,18 @@ body::after {
 
 
 /* ── Home footer ─────────────────────────────── */
+.home-footer-wrap {
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
 .home-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 18px 28px;
-  border-top: 1px solid var(--border);
-  margin-top: auto;
 }
 .footer-btn {
   background: none;
@@ -1608,10 +1618,11 @@ body.light-mode .b-written  { background: rgba(0,130,80,0.1);     color: #006840
 
   .search-box { max-width: 100%; }
   .search-btn { padding: 0 1.2rem; font-size: 0.62rem; }
+  .home-footer-wrap { padding-bottom: 0.4rem; }
   .home-footer {
     justify-content: center;
     gap: 0.6rem;
-    padding: 0.9rem 1rem 1.2rem;
+    padding: 0.9rem 1rem 0.6rem;
   }
   .footer-btn {
     padding: 0.7rem 0.9rem;
@@ -1693,7 +1704,8 @@ body.light-mode .b-written  { background: rgba(0,130,80,0.1);     color: #006840
 /* ── Privacy Policy ──────────────────────────────── */
 .site-legal {
   text-align: center;
-  padding: 0.6rem 1rem 1rem;
+  padding: 0 1rem 1rem;
+  width: 100%;
 }
 .privacy-link {
   background: none;
@@ -1800,34 +1812,32 @@ body.light-mode .b-written  { background: rgba(0,130,80,0.1);     color: #006840
   </div>
 
   <!-- Home Footer -->
-  <div class="home-footer">
-    <button class="footer-btn" onclick="artistShuffle()">
-      <span class="footer-btn-icon">⇄</span><span class="footer-btn-text"> Artist Shuffle</span>
-    </button>
+  <div class="home-footer-wrap">
+    <div class="home-footer">
+      <button class="footer-btn" onclick="artistShuffle()">
+        <span class="footer-btn-icon">⇄</span><span class="footer-btn-text"> Artist Shuffle</span>
+      </button>
 
-    <!-- Gear sits between the two buttons -->
-    <div class="footer-gear-wrap">
-      <button class="footer-gear-btn" onclick="toggleSettings()" title="Settings">⚙️</button>
-      <div class="settings-panel" id="settingsPanel">
-        <div class="settings-label">Appearance</div>
-        <div class="theme-toggle-row">
-          <span class="theme-toggle-text">Light Mode</span>
-          <label class="toggle-switch">
-            <input type="checkbox" id="lightModeToggle" onchange="setTheme(this.checked)" checked>
-            <span class="toggle-slider"></span>
-          </label>
+      <!-- Gear + Privacy Policy stacked in center -->
+      <div class="footer-gear-wrap">
+        <button class="footer-gear-btn" onclick="toggleSettings()" title="Settings">⚙️</button>
+        <div class="settings-panel" id="settingsPanel">
+          <div class="settings-label">Appearance</div>
+          <div class="theme-toggle-row">
+            <span class="theme-toggle-text">Light Mode</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="lightModeToggle" onchange="setTheme(this.checked)" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
         </div>
+        <button class="privacy-link" onclick="openPrivacy()">Privacy Policy</button>
       </div>
+
+      <button class="footer-btn" onclick="openSongMath()">
+        <span class="footer-btn-icon">∑</span><span class="footer-btn-text"> Song Math</span>
+      </button>
     </div>
-
-    <button class="footer-btn" onclick="openSongMath()">
-      <span class="footer-btn-icon">∑</span><span class="footer-btn-text"> Song Math</span>
-    </button>
-  </div>
-
-  <!-- Privacy Policy link -->
-  <div class="site-legal">
-    <button class="privacy-link" onclick="openPrivacy()">Privacy Policy</button>
   </div>
 
 </div>
@@ -14639,18 +14649,17 @@ function toggleSettings() {
 }
 function setTheme(light) {
   document.body.classList.toggle('light-mode', light);
-  localStorage.setItem('theme', light ? 'light' : 'dark');
+  try { localStorage.setItem('theme', light ? 'light' : 'dark'); } catch(e) {}
 }
 // Restore on load — light is default
 (function() {
-  const saved = localStorage.getItem('theme');
-  // If explicitly set to dark, switch; otherwise light is default
+  let saved = null;
+  try { saved = localStorage.getItem('theme'); } catch(e) {}
   if (saved === 'dark') {
     document.body.classList.remove('light-mode');
     const t = document.getElementById('lightModeToggle');
     if (t) t.checked = false;
   } else {
-    // Light is default (body already has light-mode class)
     document.body.classList.add('light-mode');
     const t = document.getElementById('lightModeToggle');
     if (t) t.checked = true;
@@ -14685,8 +14694,8 @@ document.addEventListener('click', function(e) {
       <p>The only data stored on your device is a single preference in <code>localStorage</code> — your chosen display theme (light or dark mode). This stays on your device and is never transmitted to us.</p>
 
       <h2>Third-Party Services</h2>
-      <p><strong>Google AdSense:</strong> This site displays advertisements served by Google AdSense. Google may use cookies and similar tracking technologies to serve personalised ads based on your browsing activity. You can opt out of personalised advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">google.com/settings/ads</a>.</p>
-      <p><strong>Google Fonts:</strong> This site loads fonts (Anton, Syne, JetBrains Mono, Courier Prime) from Google Fonts. Google may log font requests. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</p>
+      <p><strong>Google AdSense:</strong> This site displays advertisements served by Google AdSense. Google may use cookies and similar tracking technologies to serve personalised ads based on your browsing activity. You can opt out of personalised advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">google.com/settings/ads</a>.</p>
+      <p><strong>Google Fonts:</strong> This site loads fonts (Anton, Syne, JetBrains Mono, Courier Prime) from Google Fonts. Google may log font requests. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a>.</p>
 
       <h2>Cookies</h2>
       <p>We do not set any cookies ourselves. Google AdSense may set cookies for ad personalisation. You can manage cookie preferences through your browser settings.</p>
