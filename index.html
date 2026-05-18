@@ -495,6 +495,7 @@ body::after {
   border-top: 1px solid var(--border);
   padding: 1.2rem 2rem 1.6rem;
   background: var(--bg);
+  display: none; /* unhide when AdSense code is added */
 }
 
 .ad-banner-inner {
@@ -1233,6 +1234,51 @@ body.light-mode #songMathScreen::after {
 }
 .cat-summary::-webkit-scrollbar { display: none; }
 
+/* ── Apple Music Button ─────────────────────────────── */
+.stream-btns {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+
+
+.youtube-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 20px;
+  color: var(--muted-bright);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+.youtube-btn:hover {
+  border-color: #ff0000;
+  color: #ff0000;
+  background: rgba(255,0,0,0.06);
+}
+body.light-mode .youtube-btn {
+  border-color: rgba(0,0,0,0.2);
+  color: var(--muted-bright);
+}
+body.light-mode .youtube-btn:hover {
+  border-color: #cc0000;
+  color: #cc0000;
+  background: rgba(204,0,0,0.06);
+}
+
+
 /* Cat-pill color tokens — set per category in JS via inline style */
 .cat-pill {
   flex: 1;
@@ -1430,11 +1476,24 @@ body.light-mode .cat-pill.active {
   align-items: center;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--border);
-  transition: background 0.1s;
-  cursor: default;
+  transition: background 0.12s, opacity 0.12s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 
-.song-row:hover { background: var(--surface); }
+.song-row:hover {
+  background: var(--surface);
+  opacity: 0.85;
+}
+
+.song-row:hover .row-title {
+  color: #ff0000;
+}
+
+body.light-mode .song-row:hover .row-title {
+  color: #cc0000;
+}
 
 .row-num {
   font-family: var(--mono);
@@ -1858,6 +1917,15 @@ body.light-mode .b-written  { background: rgba(0,130,80,0.1);     color: #006840
       <h1 class="artist-hero-name" id="heroName"></h1>
       <div class="artist-legal-name-block" id="heroLegal"></div>
       <div class="artist-meta-stack" id="heroMeta"></div>
+      <div class="stream-btns">
+
+        <a class="youtube-btn" id="youtubeMusicBtn" href="#" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.54 3.6 12 3.6 12 3.6s-7.54 0-9.38.46A3.02 3.02 0 0 0 .5 6.2C0 8.06 0 12 0 12s0 3.94.5 5.8a3.02 3.02 0 0 0 2.12 2.14C4.46 20.4 12 20.4 12 20.4s7.54 0 9.38-.46a3.02 3.02 0 0 0 2.12-2.14C24 15.94 24 12 24 12s0-3.94-.5-5.8zM9.6 15.6V8.4l6.4 3.6-6.4 3.6z"/>
+          </svg>
+          YouTube
+        </a>
+      </div>
     </div>
     <div class="hero-divider"></div>
     <div class="hero-counts">
@@ -2480,7 +2548,43 @@ const DB = {
       { title:"Picture Perfect", feat:"ft. will.i.am", year:2012, cat:"single", album:"Non-album single" },
       { title:"Sweet Love (Remix)", feat:"ft. Jacquees & Trey Songz", year:2017, cat:"mixtape", album:"Heartbreak on a Full Moon Deluxe" },
       { title:"Big Moves", feat:"ft. Lil Baby & Gunna", year:2019, cat:"album", album:"Indigo" },
-      { title:"Need a Stack", feat:"ft. Gunna & Lil Baby", year:2019, cat:"album", album:"Indigo" },]
+      { title:"Need a Stack", feat:"ft. Gunna & Lil Baby", year:2019, cat:"album", album:"Indigo" },
+      { title:"Leave Me Alone / Intro", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Obvious", feat:"", year:2026, cat:"single", album:"BROWN" },
+      { title:"Honey Pack", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Fallin'", feat:"ft. Leon Thomas", year:2026, cat:"single", album:"BROWN" },
+      { title:"Hate Me", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Call Your Name", feat:"ft. Sexyy Red & GloRilla", year:2026, cat:"album", album:"BROWN" },
+      { title:"For the Moment", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"F**k and Party", feat:"ft. Vybz Kartel", year:2026, cat:"album", album:"BROWN" },
+      { title:"Red Rum", feat:"ft. YoungBoy Never Broke Again", year:2026, cat:"album", album:"BROWN" },
+      { title:"It's Not You It's Me", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Cry For Me", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Say Nothin'", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Slow Jamz", feat:"ft. Lucky Daye", year:2026, cat:"album", album:"BROWN" },
+      { title:"Perfect Timing", feat:"ft. Fridayy", year:2026, cat:"album", album:"BROWN" },
+      { title:"In My Head", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"What's Love", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Something in the Water", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Won't Let Me Leave", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Bodygoals", feat:"ft. Tank", year:2026, cat:"album", album:"BROWN" },
+      { title:"Colours", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Skin to Skin", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Theme Song", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Your Time", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"It's Personal", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Present / Outro", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Go Girlfriend", feat:"", year:2024, cat:"album", album:"11:11 (Deluxe)" },
+      { title:"Feel Something", feat:"", year:2024, cat:"album", album:"11:11 (Deluxe)" },
+      { title:"Hmmm", feat:"ft. Davido", year:2024, cat:"album", album:"11:11 (Deluxe)" },
+      { title:"Leave Me Alone", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"#BODYGOALS", feat:"ft. Tank", year:2026, cat:"album", album:"BROWN" },
+      { title:"Present", feat:"", year:2026, cat:"album", album:"BROWN" },
+      { title:"Best Ever", feat:"ft. Maeta", year:2023, cat:"album", album:"11:11" },
+      { title:"Sunshine", feat:"ft. Lil Durk", year:2022, cat:"album", album:"Breezy" },
+      { title:"Call Me Everyday", feat:"ft. Wizkid", year:2022, cat:"album", album:"Breezy" },
+      { title:"Hmhmm", feat:"", year:2022, cat:"album", album:"Breezy" },
+      { title:"Say Somethin", feat:"with Young Thug", year:2020, cat:"collab", album:"Slime & B" },]
   },
 
   // ═══════════════════════════════════════════════════════
@@ -10583,7 +10687,59 @@ const DB = {
       { title:"Calling for You", feat:"ft. 21 Savage", year:2023, cat:"single", album:"For All the Dogs" },
       { title:"Away from Home", feat:"", year:2023, cat:"album", album:"For All the Dogs" },
       { title:"Red Button", feat:"", year:2024, cat:"single", album:"Astro World' season" },
-      { title:"Housekeeping Knows", feat:"", year:2024, cat:"single", album:"Non-album single" },]
+      { title:"Housekeeping Knows", feat:"", year:2024, cat:"single", album:"Non-album single" },
+      { title:"CN Tower", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Moth Balls", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Something About You", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Crying in Chanel", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Spider-Man Superman", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Deeper", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Small Town Fame", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Pimmie's Dilemma", feat:"ft. Pim & PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Brian Steel", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Gimme a Hug", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Raining in Houston", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Lasers", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Meet Your Padre", feat:"ft. PARTYNEXTDOOR & Chino Pacas", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Die Trying", feat:"ft. PARTYNEXTDOOR & Yebba", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Somebody Loves Me", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Celibacy", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"OMW", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Glorious", feat:"ft. PARTYNEXTDOOR & Ice Spice", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"When He's Gone", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"Greedy", feat:"with PARTYNEXTDOOR", year:2025, cat:"collab", album:"Some Sexy Songs 4 U" },
+      { title:"What Did I Miss?", feat:"", year:2026, cat:"single", album:"Iceman" },
+      { title:"Which One", feat:"ft. Central Cee", year:2026, cat:"single", album:"Iceman" },
+      { title:"Dog House", feat:"ft. Yeat & Julia Wolf", year:2026, cat:"single", album:"Iceman" },
+      { title:"As We Speak", feat:"ft. Smiley", year:2024, cat:"single", album:"Non-album single" },
+      { title:"No Face", feat:"ft. Playboi Carti", year:2024, cat:"single", album:"Non-album single" },
+      { title:"Daylight", feat:"", year:2023, cat:"album", album:"For All the Dogs" },
+      { title:"7969 Santa", feat:"", year:2023, cat:"album", album:"For All the Dogs" },
+      { title:"Slime You Out", feat:"ft. SZA", year:2023, cat:"single", album:"For All the Dogs" },
+      { title:"Tried Our Best", feat:"", year:2023, cat:"album", album:"For All the Dogs" },
+      { title:"Screw the World (Interlude)", feat:"ft. Snoop Dogg", year:2023, cat:"album", album:"For All the Dogs" },
+      { title:"Members Only", feat:"ft. PARTYNEXTDOOR", year:2023, cat:"album", album:"For All the Dogs" },
+      { title:"Drew a Picasso", feat:"ft. Bad Bunny", year:2023, cat:"album", album:"For All the Dogs" },
+      { title:"What Would Pluto Do", feat:"ft. Future", year:2023, cat:"album", album:"For All the Dogs" },
+      { title:"All the Parties", feat:"ft. Chief Keef", year:2023, cat:"album", album:"For All the Dogs" },
+      { title:"BBL Love (Interlude)", feat:"ft. Teezo Touchdown", year:2023, cat:"album", album:"For All the Dogs" },
+      { title:"Gently", feat:"ft. Bad Bunny", year:2023, cat:"album", album:"For All the Dogs" },
+      { title:"Stories About My Brother", feat:"", year:2023, cat:"album", album:"For All the Dogs: Scary Hours Edition" },
+      { title:"The Shoe Fits", feat:"", year:2023, cat:"album", album:"For All the Dogs: Scary Hours Edition" },
+      { title:"Wick Man", feat:"", year:2023, cat:"album", album:"For All the Dogs: Scary Hours Edition" },
+      { title:"Evil Ways", feat:"ft. J. Cole", year:2023, cat:"album", album:"For All the Dogs: Scary Hours Edition" },
+      { title:"Texts Go Green", feat:"", year:2022, cat:"album", album:"Honestly, Nevermind" },
+      { title:"Currents", feat:"", year:2022, cat:"album", album:"Honestly, Nevermind" },
+      { title:"A Keeper", feat:"", year:2022, cat:"album", album:"Honestly, Nevermind" },
+      { title:"Liability", feat:"", year:2022, cat:"album", album:"Honestly, Nevermind" },
+      { title:"Down Hill", feat:"", year:2022, cat:"album", album:"Honestly, Nevermind" },
+      { title:"Overdrive", feat:"", year:2022, cat:"album", album:"Honestly, Nevermind" },
+      { title:"Calling My Name", feat:"", year:2022, cat:"album", album:"Honestly, Nevermind" },
+      { title:"Sticky", feat:"", year:2022, cat:"album", album:"Honestly, Nevermind" },
+      { title:"Massive", feat:"", year:2022, cat:"album", album:"Honestly, Nevermind" },
+      { title:"Flight's Booked", feat:"", year:2022, cat:"album", album:"Honestly, Nevermind" },
+      { title:"Tie That Binds", feat:"", year:2022, cat:"album", album:"Honestly, Nevermind" },
+      { title:"Centrepiece", feat:"ft. 21 Savage", year:2022, cat:"album", album:"Honestly, Nevermind" },]
   },
 
   "Kendrick Lamar": {
@@ -14293,6 +14449,100 @@ const DB = {
       { title:"Flower of the Universe", feat:"", year:2018, cat:"single", album:"A Wrinkle in Time OST" }
     ]
   }
+,
+
+  "Maleekah Malik": {
+    legalName: "Malika Kinoti",
+    genres: ["R&B", "Contemporary R&B", "Afro-Soul"],
+    years: "2023 – PRESENT",
+    total: "~12+",
+    songs: [
+      { title:"Lonely", feat:"", year:2023, cat:"single", album:"Non-album single" },
+      { title:"Love Again", feat:"", year:2023, cat:"single", album:"Non-album single" },
+      { title:"Maybe", feat:"", year:2023, cat:"single", album:"Non-album single" },
+      { title:"Ndoto Mengi", feat:"", year:2023, cat:"single", album:"Non-album single" },
+      { title:"Njoo", feat:"", year:2023, cat:"single", album:"Non-album single" },
+      { title:"Speak", feat:"", year:2023, cat:"single", album:"Non-album single" },
+      { title:"Trust in You", feat:"", year:2023, cat:"single", album:"Non-album single" },
+      { title:"What It Feels Like", feat:"", year:2023, cat:"single", album:"Non-album single" },
+      { title:"We Mirror for Sure", feat:"", year:2023, cat:"single", album:"Non-album single" },
+      { title:"0798", feat:"", year:2023, cat:"single", album:"Non-album single" },
+      { title:"Motivation", feat:"", year:2023, cat:"single", album:"Non-album single" },
+      { title:"I Don't Mean To", feat:"", year:2023, cat:"single", album:"Non-album single" }
+    ]
+  }
+,
+
+  "Camp Mulla": {
+    legalName: "Taio, Shappaman, Karun, Kus Ma & Mykie Tooni",
+    genres: ["Alt Hip-Hop", "Pop-Rap", "R&B", "Kapuka"],
+    years: "2009 – 2018",
+    total: "~25+",
+    songs: [
+      { title:"Low", feat:"", year:2009, cat:"single", album:"Non-album single" },
+      { title:"Party Don't Stop", feat:"ft. Collo", year:2010, cat:"single", album:"Non-album single" },
+      { title:"Feel No Pain", feat:"", year:2011, cat:"single", album:"Funky Town" },
+      { title:"Fresh All Day", feat:"", year:2011, cat:"single", album:"Funky Town" },
+      { title:"Hold It Down", feat:"", year:2012, cat:"single", album:"Funky Town" },
+      { title:"Funky Town", feat:"", year:2012, cat:"album", album:"Funky Town" },
+      { title:"Move On", feat:"", year:2012, cat:"album", album:"Funky Town" },
+      { title:"Prices", feat:"ft. Wizkid", year:2012, cat:"single", album:"Funky Town" },
+      { title:"Sunday Swagg", feat:"", year:2012, cat:"album", album:"Funky Town" },
+      { title:"Take It to the Floor", feat:"", year:2012, cat:"album", album:"Funky Town" },
+      { title:"We Can Go", feat:"", year:2012, cat:"album", album:"Funky Town" },
+      { title:"Where Do You Come From", feat:"", year:2012, cat:"album", album:"Funky Town" },
+      { title:"Addicted", feat:"", year:2012, cat:"album", album:"Funky Town" },
+      { title:"End of the Night", feat:"", year:2012, cat:"album", album:"Funky Town" },
+      { title:"Look at Me Now", feat:"ft. M.anifest", year:2013, cat:"single", album:"Non-album single" }
+    ]
+  },
+
+  "Karun": {
+    legalName: "Karungari Mungai",
+    genres: ["R&B", "Afro-Soul", "Alternative R&B", "Afrobeats"],
+    years: "2013 – PRESENT",
+    total: "~45+",
+    songs: [
+      { title:"Sun & Moon", feat:"", year:2014, cat:"album", album:"Sun & Moon" },
+      { title:"Interlude (Sun)", feat:"", year:2014, cat:"album", album:"Sun & Moon" },
+      { title:"All I Got", feat:"", year:2014, cat:"album", album:"Sun & Moon" },
+      { title:"Butterfly", feat:"", year:2014, cat:"album", album:"Sun & Moon" },
+      { title:"Beautiful Mistakes", feat:"", year:2014, cat:"album", album:"Sun & Moon" },
+      { title:"Hold Me", feat:"ft. Nana Atta", year:2015, cat:"collab", album:"Non-album single" },
+      { title:"Treasure", feat:"with Bigfootinyourface", year:2015, cat:"collab", album:"Non-album single" },
+      { title:"Wondering Why", feat:"ft. M.anifest", year:2016, cat:"single", album:"Indigo" },
+      { title:"Kismet", feat:"", year:2016, cat:"album", album:"Indigo" },
+      { title:"Colour of the Wind", feat:"", year:2016, cat:"album", album:"Indigo" },
+      { title:"Come Closer", feat:"", year:2016, cat:"album", album:"Indigo" },
+      { title:"Dream", feat:"", year:2016, cat:"album", album:"Indigo" },
+      { title:"Flight", feat:"", year:2016, cat:"album", album:"Indigo" },
+      { title:"Make Believe", feat:"ft. Blinky Bill", year:2018, cat:"single", album:"Non-album single" },
+      { title:"Roses", feat:"ft. Ukweli", year:2018, cat:"single", album:"Non-album single" },
+      { title:"Glow Up", feat:"", year:2019, cat:"single", album:"Non-album single" },
+      { title:"High", feat:"", year:2019, cat:"single", album:"Non-album single" },
+      { title:"True to Me", feat:"with Sky Girls Kenya", year:2020, cat:"collab", album:"Non-album single" },
+      { title:"Catch a Vibe", feat:"", year:2021, cat:"single", album:"Catch a Vibe" },
+      { title:"Here With Me", feat:"", year:2021, cat:"album", album:"Catch a Vibe" },
+      { title:"Easy", feat:"", year:2021, cat:"album", album:"Catch a Vibe" },
+      { title:"Better Days", feat:"", year:2021, cat:"album", album:"Catch a Vibe" },
+      { title:"On My Own", feat:"", year:2021, cat:"album", album:"Catch a Vibe" },
+      { title:"Wanjiru", feat:"", year:2021, cat:"album", album:"Catch a Vibe" },
+      { title:"Only You", feat:"", year:2022, cat:"single", album:"Non-album single" },
+      { title:"Pen & Paper", feat:"ft. Hook", year:2022, cat:"single", album:"Non-album single" },
+      { title:"Lie to Me (Tell Me a Fairytale)", feat:"", year:2022, cat:"single", album:"Non-album single" },
+      { title:"I'll Tell You Why", feat:"ft. GR! & Hook", year:2022, cat:"album", album:"Passenger 555" },
+      { title:"Passenger", feat:"", year:2022, cat:"album", album:"Passenger 555" },
+      { title:"Float", feat:"", year:2022, cat:"album", album:"Passenger 555" },
+      { title:"Detour", feat:"", year:2022, cat:"album", album:"Passenger 555" },
+      { title:"Somewhere", feat:"", year:2022, cat:"album", album:"Passenger 555" },
+      { title:"Still", feat:"", year:2022, cat:"album", album:"Passenger 555" },
+      { title:"Feel You", feat:"with Bigfootinyourface", year:2026, cat:"single", album:"Eternal" },
+      { title:"Say You Love Me", feat:"with Juls, A2 & Xenia Manasseh", year:2022, cat:"featured", album:"Sounds of My World (Deluxe)" },
+      { title:"Vibration", feat:"with Savara", year:2022, cat:"featured", album:"Non-album single" },
+      { title:"Let Me", feat:"with NNAVY & Msaki ft. Hendrick Sam", year:2023, cat:"featured", album:"Non-album single" },
+      { title:"Last Stop", feat:"", year:2022, cat:"album", album:"Passenger 555" }
+    ]
+  }
 };
 
 // Category config
@@ -14411,6 +14661,15 @@ function loadArtist(name) {
 
   document.getElementById("topbarName").textContent = name;
 
+
+
+  // YouTube link — search for artist's topic channel / music
+  const ytBtn = document.getElementById("youtubeMusicBtn");
+  if (ytBtn) {
+    const ytQuery = encodeURIComponent(name + " music");
+    ytBtn.href = `https://www.youtube.com/results?search_query=${ytQuery}`;
+  }
+
   buildCatSummary(songs);
   renderList();
 
@@ -14433,6 +14692,7 @@ function goHome() {
   activeFilter = "all";
   window.scrollTo({top: 0, behavior: "instant"});
 }
+
 
 const CAT_PILL_COLORS = {
   all:      '#e8321e',   /* red    */
@@ -14543,15 +14803,17 @@ function renderRow(s, n) {
   const subtitle = s.writtenFor
     ? `<div class="row-feat">✍ Written for ${s.writtenFor}${s.feat ? ' · ' + s.feat : ''}</div>`
     : s.feat ? `<div class="row-feat">${s.feat}</div>` : "";
-  return `<div class="song-row">
+  const ytQ = encodeURIComponent(`${s.title} ${currentArtist}`);
+  const ytURL = `https://www.youtube.com/results?search_query=${ytQ}`;
+  return `<a class="song-row" href="${ytURL}" target="_blank" rel="noopener noreferrer">
     <div class="row-num">${n}</div>
     <div class="row-info">
-      <div class="row-title">${s.title}</div>
+      <div class="row-title">${esc(s.title)}</div>
       ${subtitle}
     </div>
     <div><span class="badge ${c.cls}">${c.label}</span></div>
-    <div class="row-album">${s.album}</div>
-  </div>`;
+    <div class="row-album">${esc(s.album)}</div>
+  </a>`;
 }
 
 // ── LEGEND ─────────────────────────────────────────────
